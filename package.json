@@ -1,0 +1,23 @@
+{
+  "name": "cartjs",
+  "version": "0.5",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test-jasmine": "jasmine",
+    "test": "karma start --single-run",
+    "test-dev": "karma start"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^14.4.0",
+    "jasmine": "^2.6.0",
+    "jasmine-core": "^2.6.2",
+    "karma": "^1.7.0",
+    "karma-browserify": "^5.1.1",
+    "karma-chrome-launcher": "^2.1.1",
+    "karma-jasmine": "^1.1.0",
+    "watchify": "^3.9.0"
+  }
+}
