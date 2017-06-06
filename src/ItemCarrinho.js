@@ -20,7 +20,7 @@
 // }
 const ProdutoItemCarrinho = require('./ProdutoItemCarrinho')
 
-function ItemCarrinho(produto, variacoes, observacao, quantidade) {
+function ItemCarrinho(produto: ProdutoItemCarrinho, variacoes: Array<VariacaoProdutoItemCarrinho>, observacao: string, quantidade: number) {
     /**
      * Item do carrinho, deve passar produto como tipo ProdutoItemCarrinho
      */
@@ -30,11 +30,15 @@ function ItemCarrinho(produto, variacoes, observacao, quantidade) {
     if (typeof (observacao) !== 'string') throw new Error("Parâmetro inválido para observacao")
     if (quantidade < 0) throw new Error("Quantidade deve ser maior que 0")
 
-    const _produto = produto
-    const _variacoes = variacoes
-    const _observacao = observacao
-    const _quantidade = quantidade
-    const _valor = {
+    const _produto: ProdutoItemCarrinho = produto
+    const _variacoes: Array<VariacaoProdutoItemCarrinho> = variacoes
+    const _observacao: string = observacao
+    const _quantidade: quantidade = quantidade
+    
+    const _valor:{
+        unitario: number,
+        total:number
+    } = {
         unitario: 0,
         total: 0
     }

@@ -11,7 +11,6 @@ describe('Inicialização do carrinho ->', function() {
 
     beforeEach(()=>{
         carrinho = new Carrinho('123','123')
-
         itemCarrinho01 = new ItemCarrinho(new ProdutoItemCarrinho('123','Produto tal',100,'caminho-img',1),[],'Minha observação',1)
         itemCarrinho02 = new ItemCarrinho(new ProdutoItemCarrinho('123','Produto tal',100,'caminho-img',1),[
             new VariacaoProdutoItemCarrinho('123','essa é uma variacao',0,3,1,true,[

@@ -6,12 +6,17 @@
   "scripts": {
     "test-jasmine": "jasmine",
     "test": "karma start --single-run",
-    "test-dev": "karma start"
+    "test-dev": "karma start",
+    "build": "babel src/ -d lib/",
+    "prepublish": "yarn run build"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
     "browserify": "^14.4.0",
+    "flow-bin": "^0.47.0",
     "jasmine": "^2.6.0",
     "jasmine-core": "^2.6.2",
     "karma": "^1.7.0",
