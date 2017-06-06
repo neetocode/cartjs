@@ -6,11 +6,11 @@ class ProdutoItemCarrinho{
         if(typeof(img) !== 'string') throw Error("img inválido para o ProdutoItemCarrinho")
         if(typeof(status) !== 'number') throw Error("status inválido para o ProdutoItemCarrinho")
 
-        this.id:string = id
-        this.nome:string = nome
-        this.valor:number = valor
-        this.img:string = img
-        this.status:number = status
+        this.id = id
+        this.nomeg = nome
+        this.valor = valor
+        this.img = img
+        this.status = status
     }
 }
 

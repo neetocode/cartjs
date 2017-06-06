@@ -1,5 +1,5 @@
 class VariacaoProdutoItemCarrinho{
-    constructor(id, nome, min, max, tipoCalculo, isAtivo, opcoes){
+    constructor(id:string, nome:string, min: number, max: number, tipoCalculo: number, isAtivo: boolean, opcoes: Array<OpcaoVariacaoProdutoItemCarrinho>){
         if(!(opcoes instanceof Array)) throw new Error("opcoes possui um valor inválido em VariacaoProdutoItemCarrinho")
         if(opcoes.length < min || opcoes.length > max) throw new Error("Quantidade de opções fora do intervalo de mínimo e máximo")
         

@@ -1,9 +1,9 @@
 class OpcaoVariacaoProdutoItemCarrinho{
-    constructor(id: number, nome: string, preco: number, status: number){
-        this.id:number = id
-        this.nome:string = nome
-        this.preco:number = preco
-        this.status:number = status
+    constructor(id: string, nome: string, preco: number, status: number){
+        this.id = id
+        this.nome = nome
+        this.preco = preco
+        this.status = status
     }
 }
 
