@@ -1,116 +1,132 @@
+/* @flow */
+import ItemCarrinho from './ItemCarrinho'
 
-const ItemCarrinho = require('./../src/ItemCarrinho')
+type objValor = {
+    subTotal: number,
+    valorDesconto: number,
+    valorFrete: number,
+    total: number
+}
 
-function Carrinho(idCliente: string, idPlace: string){
-    if (idCliente === undefined || idCliente === null) throw new Error("idCliente deve ser um valor válido")
-    if (idPlace === undefined || idPlace === null) throw new Error("idPlace deve ser um valor válido")
+type objState ={
+    mensagem: string,
+    isValido: boolean
+}
 
-    const _clienteId : string = idCliente
-    const _placeId : string = idPlace
-    const _dataCriacao = new Date()
-    const _dataAtualizacao = new Date()
-    const _itens: Array<ItemCarrinho> =  []
+export class Carrinho{
 
-    type _objvalor ={
-        subTotal: number,
-        valorDesconto: number,
-        valorFrete: number,
-        total: number
+    _clienteId : string
+    _placeId : string
+    _dataCriacao : Date
+    _dataAtualizacao : Date
+    _itens : Array<ItemCarrinho>
+    _valor: objValor
+    _state : objState
+    _frete : Object
+
+    constructor(clienteId: string, placeId: string){
+        if (clienteId === undefined || clienteId === null) throw new Error("clienteId deve ser um valor válido")
+        if (placeId === undefined || placeId === null) throw new Error("placeId deve ser um valor válido")
+
+        this._clienteId = clienteId
+        this._placeId = placeId
+        this._dataCriacao = new Date()
+        this._dataAtualizacao = new Date()
+        this._itens = []
+        this._valor = {
+            subTotal: 0,
+            valorDesconto: 0,
+            valorFrete: 0,
+            total: 0,
+            teste: 1
+        }
+        this._state = {  
+            mensagem: '',
+            isValido: false
+        }
+        this._frete = {}
+
     }
-    type _objstate ={
-        mensagem:string,
-        isValido:boolean
-    }
-    const _valor: _objvalor = {
-        subTotal: 0,
-        valorDesconto: 0,
-        valorFrete: 0,
-        total: 0
-    }
-    
-    const _state: _objstate = {  
-        mensagem: '',
-        isValido: false
+
+    addItem(itemCarrinho: ItemCarrinho) : void{
+        if (!(itemCarrinho instanceof ItemCarrinho)) throw new Error("itemCarrinho possui valor inválido para Carrinho.adicionarItem")
+
+        this._itens.push(itemCarrinho)
+        this.calcularValores()
     }
 
-    const _frete = {}
+    removeItem(index: number) : void{
+        if(isNaN(index)) throw new Error("Índice não é um número")
+        if(index >= this._itens.length) throw new Error("Índice fora do intervalo")
 
-    const _size = () : number => {
-        return _itens.length
+        this._itens.splice(index,1)
+        this.calcularValores()
     }
 
-    const _isValido = () : boolean => {
-        if(_itens.length <= 0){
-            _state.mensagem =  "Seu carrinho está vazio",
-            _state.isValido = false
+    replaceItem(index:number, itemCarrinho:ItemCarrinho):void{
+        if (!(itemCarrinho instanceof ItemCarrinho)) throw new Error("itemCarrinho possui valor inválido para Carrinho.adicionarItem")
+        if(isNaN(index)) throw new Error("Índice não é um número")
+        if(index >= this._itens.length) throw new Error("Índice fora do intervalo")
+
+        this._itens[index] = itemCarrinho
+        this.calcularValores()
+
+    }
+
+    calcularValores():void{
+        // não está tratando descontos
+        let total = 0
+        this._itens.forEach(item=>{
+            total += item.valor.total
+        })
+
+        this._valor.valorDesconto = 0
+        this._valor.valorFrete = 0
+        this._valor.subTotal = total
+        this._valor.total = total - this._valor.valorDesconto
+    }
+
+
+    get clienteId():string{
+        return this._clienteId
+    }
+    get placeId():string{
+        return this._clienteId
+    }
+    get size():number{
+        return this._itens.length
+    }
+    get valor():objValor{
+        return this.valor
+    }
+    get valido():boolean{
+        if(this._itens.length <= 0){
+            this._state.mensagem =  "Seu carrinho está vazio",
+            this._state.isValido = false
             
             return false
         }
-        if(_valor.total <= 0){
-            _state.mensagem = "O valor do carrinho é inválido"
-            _state.isValido = false
+        if(this._valor.total <= 0){
+            this._state.mensagem = "O valor do carrinho é inválido"
+            this._state.isValido = false
             return false
         }
         
-        _state.mensagem = "Carrinho validado localmente"
-        _state.isValido = true
+        this._state.mensagem = "Carrinho validado localmente"
+        this._state.isValido = true
         
         return true
     }
-    const _addItem = (itemCarrinho: ItemCarrinho) : void => {
-        if (!(itemCarrinho instanceof ItemCarrinho)) throw new Error("itemCarrinho possui valor inválido para Carrinho.adicionarItem")
-
-        _itens.push(itemCarrinho)
-        _calcularValores()
+    get dataCriacao():Date{
+        return this._dataCriacao
     }
-
-    const _removeItem = (index: number) : void => {
-        if(isNaN(index)) throw new Error("Índice não é um número")
-        if(index >= _itens.length) throw new Error("Índice fora do intervalo")
-
-        _itens.splice(index,1)
-        _calcularValores()
+    get dataAtualizacao():Date{
+        return this._dataAtualizacao
     }
-
-    const _replaceItem = (index:number, itemCarrinho:ItemCarrinho):void =>{
-        if (!(itemCarrinho instanceof ItemCarrinho)) throw new Error("itemCarrinho possui valor inválido para Carrinho.adicionarItem")
-        if(isNaN(index)) throw new Error("Índice não é um número")
-        if(index >= _itens.length) throw new Error("Índice fora do intervalo")
-
-        _itens[index] = itemCarrinho
-        _calcularValores()
-
+    get state():objState{
+        return this._state
     }
-
-    const _calcularValores = ():void=>{
-        // não está tratando descontos
-        var total = 0
-        _itens.forEach(item=>{
-            total += item.getValor().total
-        })
-
-        _valor.valorDesconto = 0
-        _valor.valorFrete = 0
-        _valor.subTotal = total
-        _valor.total = total - _valor.valorDesconto
+    get itens():Array<ItemCarrinho>{
+        return this._itens
     }
-
-
-    this.getSize = ():number => _itens.length
-    this.getIdCliente = ():string => _clienteId
-    this.getIdPlace = ():string => _placeId
-    this.getDataCriacao = () => _dataCriacao
-    this.getDataAtualizacao = () => _dataCriacao
-    this.getState = () => _state
-    this.getValor = () => _valor
-    this.getFrete = () => _frete
-    this.getItens = ():Array<ItemCarrinho> => _itens
-    this.isValido = _isValido
-
-    this.addItem = _addItem
-    this.removeItem = _removeItem
-    this.replaceItem = _replaceItem
-
 }
-
-module.exports = Carrinho

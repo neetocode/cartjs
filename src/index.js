@@ -1,3 +1,4 @@
+//@flow
 const Carrinho = require('./Carrinho')
 const ItemCarrinho = require('./ItemCarrinho')
 const ProdutoItemCarrinho = require('./ProdutoItemCarrinho')
@@ -6,5 +7,5 @@ const OpcaoVariacaoProdutoItemCarrinho = require('./OpcaoVariacaoProdutoItemCarr
 
 
 module.exports = {
-    Carrinho, ItemCarrrinho, ProdutoItemCarrinho, VariacaoProdutoItemCarrinho, OpcaoVariacaoProdutoItemCarrinho
+    Carrinho, ItemCarrinho, ProdutoItemCarrinho, VariacaoProdutoItemCarrinho, OpcaoVariacaoProdutoItemCarrinho
 }
